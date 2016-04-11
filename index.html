@@ -1,0 +1,491 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="GBK">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+	<title>Phaser</title>
+    <style>
+        *{margin:0;padding:0}
+        html, body
+        {
+            -webkit-text-size-adjust:none;
+            overflow: hidden;
+            height:100%;
+        }
+        #selectPage{
+        	position: absolute;
+        	left:0;
+        	top:0;
+        	right:0;
+        	bottom:0;
+        	background-image: url('assets/select_bg.jpg');
+        	background-size:cover;
+        	background-position: center top;
+        	visibility: hidden;
+        }
+        #wrapper {
+			position: absolute;
+			z-index: 1;
+			top: 5.5rem;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			overflow: hidden;
+		}
+		
+		
+
+		#scroller {
+			position: absolute;
+			z-index: 1;
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			width: 100%;
+			-webkit-transform: translateZ(0);
+			-moz-transform: translateZ(0);
+			-ms-transform: translateZ(0);
+			-o-transform: translateZ(0);
+			transform: translateZ(0);
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-webkit-text-size-adjust: none;
+			-moz-text-size-adjust: none;
+			-ms-text-size-adjust: none;
+			-o-text-size-adjust: none;
+			text-size-adjust: none;
+		}
+		
+		
+		#wrapper2 {
+			position: absolute;
+			z-index: 1;
+			top: 8rem;
+			bottom: 3rem;
+			left:50%;
+			margin-left:-8rem;
+			width: 16rem;
+			overflow: hidden;
+		}
+		
+		#scroller2 {
+			position: absolute;
+			z-index: 1;
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			width: 100%;
+			-webkit-transform: translateZ(0);
+			-moz-transform: translateZ(0);
+			-ms-transform: translateZ(0);
+			-o-transform: translateZ(0);
+			transform: translateZ(0);
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-webkit-text-size-adjust: none;
+			-moz-text-size-adjust: none;
+			-ms-text-size-adjust: none;
+			-o-text-size-adjust: none;
+			text-size-adjust: none;
+			color:#5b3716;
+			font-size:.8rem;
+		}
+		
+		
+		#scroller ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			width: 100%;
+			text-align: left;
+		}
+		
+		#scroller li {
+			width:100%;
+			height:10rem;
+			position: relative;
+			margin-bottom:1rem
+		}
+		.rod{
+			width:18.75rem;
+			height:5.625rem;
+			background-image: url('assets/rod.png');
+			background-size:18.75rem 5.625rem;
+			position: absolute;
+			bottom:0;
+		}
+		.sel{
+			   display: -webkit-box;      
+			  display: -moz-box;         
+			  display: -ms-flexbox;     
+			  display: -webkit-flex;     
+			  display: flex;           
+		}
+		.sel div{
+			-webkit-box-flex: 1;     
+		    -moz-box-flex: 1;         
+		    -webkit-flex: 1;          
+		    -ms-flex: 1;    
+		    flex: 1;
+			height:7.075rem;
+			text-align: center;
+			
+		}
+		
+		#cover{
+            position: absolute;
+            left:0;
+            top:0;
+            right:0;
+            bottom:0;
+            z-index: 2;
+            background-color: rgba(0,0,0,.9);
+            display: none;
+        }
+        #login{
+            width:15.7rem;
+            height:13.7rem;
+            background-image: url('assets/sub_waper.png');
+            background-size: 15.7rem 13.7rem;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin-left:-7.85rem;
+            margin-top:-6.85rem;
+        }
+        #login input.ipt{
+            width:8.2rem;
+            height:1.3rem;
+            position: absolute;
+            border: none;
+            border: 2px solid #000;
+            color:#3e3e3e;
+            font-size:.7rem;
+            line-height: 1.3rem;
+            text-indent: .2rem;
+        }
+        input::-webkit-input-placeholder {
+		    color: #3e3e3e;
+		}
+        #name{
+            left:3.5rem;
+            top:4.75rem
+        }
+        #phone{
+            left:3.5rem;
+            top:7rem
+        }
+        button#subBtn{
+            width:7.05rem;
+            height:2.275rem;
+            background-image: url('assets/sub_btn.png');
+            background-size: 7.05rem 2.275rem;
+            position: absolute;
+            left:4rem;
+            top:9.3rem;
+            border: none;
+            background-color: transparent;
+        }
+        
+        #rule{
+        	position: absolute;
+        	left:0;
+        	top:0;
+        	right:0;
+        	bottom:0;
+        	background-image: url('assets/r_bg.jpg');
+        	background-size:cover;
+        	background-position: center top;
+        	visibility: hidden;
+        }
+        #t-bar{
+        	background-image: url('assets/t-bar.png');
+        	width:14.875rem;
+        	height:3.95rem;
+        	position: absolute;
+        	background-size: 14.875rem 3.95rem;
+        	left:50%;
+        	margin-left:-7.4375rem;
+        	top:3rem
+        }
+        #close-btn{
+        	width:1.65rem;
+        	height:1.65rem;
+        	background-image: url('assets/close-btn.png');
+        	background-repeat: no-repeat;
+        	background-size:1.65rem 1.65rem;
+        	position: absolute;
+        	right:1rem;
+        	top:1rem
+        }
+		
+    </style>
+    <script>
+    (function(doc,win){var docEl=doc.documentElement,resizeEvt='orientationchange'in window?'orientationchange':'resize',recalc=function(){var clientWidth=docEl.clientWidth;if(!clientWidth)return;docEl.style.fontSize=20*(clientWidth/375)+'px'};if(!doc.addEventListener)return;win.addEventListener(resizeEvt,recalc,false);doc.addEventListener('DOMContentLoaded',recalc,false)})(document,window);
+    </script>
+    <script>
+    	var user = {
+    		isLogin : false,
+    		totalScore : 3000,
+    		myLotto : {
+    			name : '毛巾一条',
+    			developer : '金地集团',
+    			awardTime : '2016.4.6',
+    			awardAddress : '江苏省南京市省建大厦'
+    		}
+    	};
+    	
+    	var build = [
+    		{
+    			skin : 'assets/lou_0.png?1',
+    			ad : [
+    				{x:110},
+    				{x:980}
+    			]
+    		},
+    		{
+    			skin : 'assets/lou_1.png?1',
+    			ad : [
+    				{x:150},
+    				{x:1030}
+    			]
+    		},
+    		{
+    			skin : 'assets/lou_2.png?2',
+    			ad : [
+    				{x:130},
+    				{x:990}
+    			]
+    		}
+    	];
+    	
+    	var KFSAD = [
+    		{
+    			KFS_NAME : '保利中央公园',
+    			AD_330_125 : 'ad/AD_330_125.jpg',
+    			AD_205_75 : 'ad/AD_205_75.jpg',
+    			SelecPic : 'assets/pro_baoli.png'
+    		},
+    		{
+    			KFS_NAME : '基地自在城',
+    			AD_330_125 : 'ad/AD_330_125.jpg',
+    			AD_205_75 : 'ad/AD_205_75.jpg',
+    			SelecPic : 'assets/pro_baoli.png'
+    		},
+    		{
+    			KFS_NAME : '金域华府',
+    			AD_330_125 : 'ad/AD_330_125.jpg',
+    			AD_205_75 : 'ad/AD_205_75.jpg',
+    			SelecPic : 'assets/pro_baoli.png'
+    		},
+    		{
+    			KFS_NAME : '超级第一豪宅',
+    			AD_330_125 : 'ad/AD_330_125.jpg',
+    			AD_205_75 : 'ad/AD_205_75.jpg',
+    			SelecPic : 'assets/pro_baoli.png'
+    		},
+    		{
+    			KFS_NAME : '宇宙第一豪宅',
+    			AD_330_125 : 'ad/AD_330_125.jpg',
+    			AD_205_75 : 'ad/AD_205_75.jpg',
+    			SelecPic : 'assets/pro_baoli.png'
+    		},
+    		{
+    			KFS_NAME : '超级赛亚人',
+    			AD_330_125 : 'ad/AD_330_125.jpg',
+    			AD_205_75 : 'ad/AD_205_75.jpg',
+    			SelecPic : 'assets/pro_baoli.png'
+    		}
+	    ]
+    	
+    	var rankTable = [
+	       {
+	       	 rank : '第一名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第二名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第三名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第四名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第五名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第六名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第七名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第八名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第九名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       },
+	       {
+	       	 rank : '第十名',
+	       	 name : '金地骑行方阵',
+	       	 total : '骑行总里程555公里'
+	       }
+	    ]
+    </script>
+    <script type="text/javascript" src="iscroll.js"></script>
+
+	<script type="text/javascript">
+	
+	var myScroll,myScroll2;
+	
+	function loaded () {
+		myScroll = new IScroll('#wrapper', { mouseWheel: true, click: true ,scrollbars: true});
+		
+		myScroll2 = new IScroll('#wrapper2', {
+			scrollbars: true,
+			mouseWheel: true,
+			interactiveScrollbars: true,
+			shrinkScrollbars: 'scale',
+			fadeScrollbars: true
+		});
+		
+		
+	}
+	
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	
+	</script>
+	<script src="zepto.min.js"></script>
+    <script src="phaser.2.4.4.min.js"></script>
+    <script src="Boot.js"></script>
+    <script src="Preloader.js"></script>
+    <script src="UI.js"></script>
+    <script src="MainMenu.js"></script>
+    <script src="MyLotto.js"></script>
+    <script src="Rank.js"></script>
+    <!--<script src="Select.js"></script>-->
+    <script src="Game.js"></script>
+    <script src="Result.js"></script>
+</head>
+<body style="background-color: #000" onload="loaded()">
+	<div id="game"></div>
+	
+	<div id="selectPage">
+		<div id="wrapper">
+			<div id="scroller">
+				<ul>
+					<li>
+						<div class="sel">
+							<div class="ss"><img src="##"  height="100%" alt="" /></div>
+							<div class="ss"><img src="##"  height="100%" alt="" /></div>
+						</div>
+						<div class="rod"></div>
+					</li>
+					<li>
+						<div class="sel">
+							<div class="ss"><img src="##"  height="100%" alt="" /></div>
+							<div class="ss"><img src="##"  height="100%" alt="" /></div>
+						</div>
+						<div class="rod"></div>
+					</li>
+					<li>
+						<div class="sel">
+							<div class="ss"><img src="##"  height="100%" alt="" /></div>
+							<div class="ss"><img src="##"  height="100%" alt="" /></div>
+						</div>
+						<div class="rod"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div id="cover">
+        <div id="login">
+            <div class="frm"><input type="text" id="name" class="ipt" placeholder="姓名"/></div>
+            <div class="frm"><input type="text" id="phone" class="ipt" placeholder="电话"/></div>
+            <button id="subBtn"></button>
+        </div>
+    </div>
+    
+    <div id="rule">
+    	<div id="t-bar"></div>
+    	<div id="close-btn"></div>
+    	<div id="wrapper2">
+			<div id="scroller2">
+				活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动<br/>
+				规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则<br/>
+				活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动<br/>
+				规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则<br/>
+				活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动<br/>
+				规则活动规则活动规则活动规则<br/>
+				规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则<br/>
+				活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动规则活动<br/>
+				规则活动规则活动规则活动规则
+			</div>
+		</div>
+    </div>
+	
+	
+<script>
+		var selectID = 0;
+		for(var i=0;i<=KFSAD.length-1;i++)
+	    {
+	    	$('.ss').eq(i).attr('data-name',KFSAD[i].KFS_NAME);
+	    	$('.ss').eq(i).find('img').attr('src',KFSAD[i].SelecPic)
+	    }
+	    
+	    document.getElementById('subBtn').addEventListener('touchend',function(){
+	        document.getElementById('cover').style.display = 'none';
+	        user.isLogin = true;
+	        $('#selectPage').css({
+        		'visibility' : 'hidden'
+        	})
+	        game.state.start('Game');
+	    },false)
+	    
+	    document.getElementById('close-btn').addEventListener('touchend',function(){
+	        $('#rule').css({
+        		'visibility' : 'hidden'
+        	})
+	    },false)
+
+
+	document.getElementById('game').style.height = document.body.clientHeight + 'px';
+    var game = new Phaser.Game(750, 1206, Phaser.CANVAS, 'game');
+	    game.state.add('Boot', MyGame.Boot);
+	    game.state.add('Preloader', MyGame.Preloader);
+	    game.state.add('MainMenu', MyGame.MainMenu);
+	    game.state.add('MyLotto', MyGame.MyLotto);
+	    game.state.add('Rank', MyGame.Rank);
+	    game.state.add('Game', MyGame.Game);
+	    game.state.add('Result', MyGame.Result);
+	    game.state.start('Boot');
+	    
+	    
+	    
+</script>
+<!--<script src="inpMusic.js"></script>-->
+</body>
+</html>
